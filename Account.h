@@ -15,7 +15,7 @@ public:
     Account();
     ~Account();
 
-    inline std::string get_user_name() const {
+    inline std::string get_name() const {
         return user_name;
     }
 
@@ -23,7 +23,7 @@ public:
         return password;
     }
 
-    inline void set_user_name(std::string user_name) {
+    inline void set_name(std::string user_name) {
         this->user_name = user_name;
     }
 
@@ -32,5 +32,5 @@ public:
     }
 
     friend std::ostream& operator<<(std::ostream& output_stream, const Account& a);
-    friend std::istream& operator>>(std::istream& input_stream, const Account& a);
+    friend std::istream& operator>>(std::istream& input_stream, Account& a);
 };
