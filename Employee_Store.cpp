@@ -35,7 +35,7 @@ inline std::vector<Employee*> Employee_Store::getEmployeeStore() const {
 }
 
 void Employee_Store::print() {
-    std::cout << employeeStore.size() << std::endl;
+    std::cout << "Current number of employees: " << employeeStore.size() << "." << std::endl;
     for(Employee* e : employeeStore) {
         e->print();
     }
@@ -50,4 +50,18 @@ Employee_Store::~Employee_Store() {
 
 void Employee_Store::add(Employee* e) {
     employeeStore.push_back(e);
+}
+
+bool Employee_Store::inRange(int& i) {
+    return i < employeeStore.size();
+}
+
+void Employee_Store::show_index() {
+    for(unsigned int i = 0;i < employeeStore.size();++i) {
+        std::cout << "Index: " << i << " Name: " << employeeStore[i]->getName() << "." << std::endl;
+    }
+}
+
+void Employee_Store::erase(int& index) {
+    employeeStore.erase(employeeStore.begin() + index);
 }

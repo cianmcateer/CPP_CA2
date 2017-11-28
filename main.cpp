@@ -146,6 +146,28 @@ void menu(string user) {
             }
 
             case 6: {
+                cout << "Delete employee." << endl;
+                cout << "Please choose from one of the following employees, enter index of employee you wish to remove. Enter -1 to abort" << endl;
+                et.show_index();
+                int index;
+                switch_validate(index);
+
+                if(index == -1) {
+                    cout << "Deletion aborted" << endl;
+                    break;
+                }
+                while(index < -1 || !et.in_range(index)) {
+
+                    if(index < -1) {
+                        std::cerr << "Please enter a positive value or enter -1 to abort deletion" << endl;
+                        switch_validate(index);
+                    }
+                    if(!et.inRange(index)) {
+                        std::cerr << "You have entered an integer that is out of range" << endl;
+                        switch_validate(index);
+                    }
+                }
+                et.erase(index);
                 break;
             }
 
