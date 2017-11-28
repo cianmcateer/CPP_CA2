@@ -1,0 +1,12 @@
+/********************************************/
+*           Work-Store                      *
+*   Please choose from one of the following *
+*   0. Exit (No save)                       *
+*   1. Show All employees                   *
+*   2. Show employees (custom sort)         *
+*   3. Show factory workers                 *
+*   4. Show office staff                    *
+*   5. Add employee                         *
+*   6. Delete employee                      *
+*   7. Update employee                      *
+/********************************************/
