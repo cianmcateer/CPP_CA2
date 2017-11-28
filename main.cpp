@@ -123,7 +123,7 @@ void menu(string user) {
 
                 if(employee_type == 1) {
                     cout << "Enter wage of worker" << endl;
-                    int wage;
+                    float wage;
                     cin >> wage;
 
                     Factory* f = new Factory(name, age, hours, wage);
