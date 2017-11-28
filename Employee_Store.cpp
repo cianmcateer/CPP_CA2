@@ -43,8 +43,11 @@ void Employee_Store::print() {
 
 Employee_Store::~Employee_Store() {
     for(Employee* e : employeeStore) {
-        std::cout << "Object distroyed" << std::endl;
         delete e;
     }
     employeeStore.clear();
+}
+
+void Employee_Store::add(Employee* e) {
+    employeeStore.push_back(e);
 }

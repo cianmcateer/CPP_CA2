@@ -10,6 +10,7 @@
 #include "Employee_Store.h"
 #include "util.h"
 
+#define DEBUG true
 
 using std::string;
 using std::cout;
@@ -18,10 +19,10 @@ using std::endl;
 using std::vector;
 
 void init();
-void menu(string& user);
+void menu(string user);
 
 int main(void) {
-    init();
+    DEBUG ? menu("Test") : init();
     return 0;
 }
 
@@ -68,26 +69,87 @@ void init() {
     }
 }
 
-void menu(string& user) {
+void menu(string user) {
     int choice;
 
     Employee_Store et;
     while(true) {
-
+        display_file("menus/main_menu.txt");
         switch_validate(choice);
-
         switch(choice) {
             case 0: {
                 cout << "Goodbye!" << endl;
-                exit(0);
+                return;
                 break;
             }
+
             case 1: {
-                cout << "Case 1" << endl;
+                cout << "Print all employees" << endl;
+                et.print();
                 break;
             }
+
             case 2: {
                 cout << "Case 2" << endl;
+                break;
+            }
+
+            case 3: {
+                break;
+            }
+
+            case 4: {
+                break;
+            }
+
+            case 5: {
+                cout << "Add employee" << endl;
+                cout << "please enter 1 for factory worker, 2 for office staff" << endl;
+                int employee_type;
+                switch_validate(employee_type);
+
+                cout << "Enter name" << endl;
+                string name;
+                cin.ignore();
+                std::getline(cin, name);
+
+                cout << "Enter age" << endl;
+                int age;
+                cin >> age;
+
+                cout << "Enter hours" << endl;
+                int hours;
+                cin >> hours;
+
+                if(employee_type == 1) {
+                    cout << "Enter wage of worker" << endl;
+                    int wage;
+                    cin >> wage;
+
+                    Factory* f = new Factory(name, age, hours, wage);
+                    et.add(f);
+                }
+                if(employee_type == 2) {
+                    cout << "Enter staff email" << endl;
+                    cin.ignore();
+                    string email;
+                    std::getline(cin, email);
+
+                    cout << "Enter staff salary" << endl;
+                    float salary;
+                    cin >> salary;
+
+                    Office* o = new Office(name, age, hours, email, salary);
+                    et.add(o);
+                }
+                break;
+            }
+
+            case 6: {
+                break;
+            }
+
+            case 7: {
                 break;
             }
             default:
