@@ -7,6 +7,9 @@
 #include <sstream>
 
 #include "Account.h"
+#include "Employee_Store.h"
+#include "util.h"
+
 
 using std::string;
 using std::cout;
@@ -16,16 +19,8 @@ using std::vector;
 
 void init();
 void menu(string& user);
-void password();
-
-void switch_validate(int& choice);
-void create_account(string name, string password);
-
-Account read_account(Account& a);
-vector<Account> get_users();
 
 int main(void) {
-
     init();
     return 0;
 }
@@ -39,7 +34,7 @@ void init() {
     switch (choice) {
         case 0: {
             cout << "Goodbye!" << endl;
-            exit(0);
+            return;
             break;
         }
         case 1: {
@@ -62,6 +57,9 @@ void init() {
         }
         case 2: {
             cout << "Enter details" << endl;
+            vector<Account> users = get_users();
+
+
             break;
         }
         default:
@@ -70,66 +68,10 @@ void init() {
     }
 }
 
-
-void create_account(string name, string password) {
-
-    std::replace(name.begin(), name.end(), ' ', '-');
-    std::replace(password.begin(), password.end(), ' ', '-');
-
-    Account a(name, password);
-    std::ofstream account_file("accounts.txt",std::fstream::in | std::ios::out | std::ios::app);
-    if(account_file.is_open()) {
-        account_file << a;
-        cout << a.get_name().substr(0,a.get_name().find('-')) << " has been added to accounts" << endl;
-    } else {
-        std::cerr << "Could not open account file" << endl;
-    }
-}
-
-Account read_account(Account& a) {
-    string name = a.get_name();
-    string password = a.get_password();
-
-    std::replace(name.begin(), name.end(), '-', ' ');
-    std::replace(password.begin(), password.end(), '-', ' ');
-
-    a.set_name(name);
-    a.set_password(password);
-
-    return a;
-}
-
-vector<Account> get_users() {
-    std::ifstream account_file("accounts.txt");
-    vector<Account> accounts;
-    if(account_file.is_open()) {
-
-        Account a;
-
-        vector<string> lines;
-        string line;
-
-        while(getline(account_file, line)) {
-            lines.push_back(line);
-        }
-        for(unsigned int i = 0;i < lines.size();++i) {
-            std::stringstream ss(lines[i]);
-
-            while(ss >> a) {
-                Account formatted_account = read_account(a);
-                accounts.push_back(formatted_account);
-            }
-        }
-
-    } else {
-        std::cerr << "Cannot open account file" << endl;
-    }
-    return accounts;
-}
-
 void menu(string& user) {
     int choice;
 
+    Employee_Store et;
     while(true) {
 
         switch_validate(choice);
@@ -152,17 +94,5 @@ void menu(string& user) {
                 cout << "Invalid number" << endl;
                 break;
         }
-    }
-}
-
-/**
-* Will loop until an integer is entered
-* @param choice
-*/
-void switch_validate(int& choice) {
-    while(!(cin >> choice)) { // Input validation only accepts integers
-        cout << "Sorry please enter a number" << endl;
-        cin.clear();
-        cin.ignore(100,'\n'); // Stops message from printing more than once if user enters more than one character
     }
 }
