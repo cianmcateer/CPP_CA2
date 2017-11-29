@@ -53,7 +53,6 @@ std::vector<Account> get_users() {
     return accounts;
 }
 
-
 Account read_account(Account& a) {
     std::string name = a.get_name();
     std::string password = a.get_password();
@@ -65,4 +64,23 @@ Account read_account(Account& a) {
     a.set_password(password);
 
     return a;
+}
+
+/**
+* Displays the contents of the file path passed in
+* @param path
+*/
+void display_file(const std::string path) {
+    // Fix file path problem
+    std::ifstream help_menu(path);
+    if(help_menu.is_open()) {
+        std::string line;
+        // Will read line until new line is detected
+        while(std::getline(help_menu,line)) {
+            std::cout << line << std::endl;
+        }
+    } else {
+        std::cerr << "Error opening menu file" << std::endl;
+    }
+
 }
