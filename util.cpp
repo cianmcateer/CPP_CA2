@@ -84,3 +84,13 @@ void display_file(const std::string path) {
     }
 
 }
+
+/**
+* Returns substring of input cut off by whitespace character
+* @author Cian McAteer
+* @param user
+* @return string
+*/
+std::string firstName(std::string user) {
+    return user.substr(0,user.find(' '));
+}
