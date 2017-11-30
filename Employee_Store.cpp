@@ -89,8 +89,8 @@ void Employee_Store::updateEmployee()
 	int newAge;
 	int newHours;
 	std::string newEmail;
-	std::string wage;
-	std::string newSalary;
+	float newWage;
+	float newSalary;
 	
 	std::cout << "\nEnter employee name to begin editing"<< std::endl;
 	std::cout << "> ";
@@ -110,7 +110,9 @@ void Employee_Store::updateEmployee()
 			std::cout << "|-Edit name..............[1] |" << std::endl;
 			std::cout << "|-Edit age...............[2] |" << std::endl;
 			std::cout << "|-Edit hours.............[3] |" << std::endl;
-			//std::cout << "|-Edit salary............[4] |" << std::endl;
+			std::cout << "|-Edit Email.............[4] |" << std::endl;
+			std::cout << "|-Edit salary............[5] |" << std::endl;
+			std::cout << "|-Edit Wages.............[6] |" << std::endl;
 			std::cout << "+----------------------------+" << std::endl;
 			std::cout << "\n> ";
 			std::cin >> menuSelect;
@@ -136,44 +138,40 @@ void Employee_Store::updateEmployee()
 					employeeStore[index]->setHours(newHours);
 					std::cout <<employeeStore[index]->getName()<<" "<<employeeStore[index]->getAge() <<" "<<employeeStore[index]->getHours()<< std::endl;
 					break;
+				case 4 : {
+					std::cout << "Edit Email:";
+					std::getline(std::cin,newEmail);
+					Office* off1 = dynamic_cast<Office*>(employeeStore[index]);
+					off1->setEmail(newEmail);
+					std::cout <<employeeStore[index]->getName()<<" "<<employeeStore[index]->getAge() <<" "<<employeeStore[index]->getHours()<<" "<< off1->getEmail()<<" "<< off1->getSalary()<< std::endl;
+					break;
+				}
+				case 5 : {
+					std::cout << "Edit Salary:";
+					std::cin >> newSalary;
+					Office* off2 = dynamic_cast<Office*>(employeeStore[index]);
+					off2->setSalary(newSalary);
+					std::cout <<employeeStore[index]->getName()<<" "<<employeeStore[index]->getAge() <<" "<<employeeStore[index]->getHours()<< " "<<off2->getEmail()<<" "<< off2->getSalary() << std::endl;
+					break;
+				}
+				case 6 : {
+					std::cout << "Edit Wages:";
+					std::cin >> newWage;
+					Factory* f1 = dynamic_cast<Factory*>(employeeStore[index]);
+					f1->setWage(newWage);
+					std::cout <<employeeStore[index]->getName()<<" "<<employeeStore[index]->getAge() <<" "<<employeeStore[index]->getHours()<<" "<< f1->getWage() << std::endl;
+					break;
+				}
+				case 0 :
+					return;
+					break;
 			}	
 		
 		}
 	  }
-	  else {
-		std::cout << std::endl;
-		std::cout << search<<" is not an employee" << std::endl;
-		std::cout << std::endl;
-		break;
-	  }
+	 
     
 	
-			// 
-			
-			// case 5 :
-				// edit(movies, search, newTitle, 6, "");
-				// break;
-			// case 6 : 
-				// editMovie(movies);
-				// menu = false;
-				// break;
-			// case 7 :
-				// menu = false;
-				// break;
-			// default :
-				// if(!(isdigit(menuSelect))) 
-				// {
-					// outputMessage("Invalid input, menu selection must be a number in range 1-7");
-					// std::cin.clear();
-					// std::cin.ignore(999, '\n');
-				// }
-			// }
-		
-		// }
-				
-	// }	
-	
-	// return movies;
 	
 	}
 	
@@ -229,10 +227,6 @@ void Employee_Store::sortEmployees()
 			const Factory* f2 = dynamic_cast<const Factory*>(e2);
 			if(f1 != nullptr) {
 				return f1->getWage() < f2->getWage();
-			}
-			else
-			{
-				std::cout<<"null";
 			}
 		});
 	}
