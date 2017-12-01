@@ -172,7 +172,12 @@ void menu(string user) {
             }
 
             case 7: {
-				et.updateEmployee();
+				
+				cout << "Update employee details" << endl;
+                cout << "please enter 1 for factory worker, 2 for office staff" << endl;
+				int employee_type;
+                switch_validate(employee_type);
+				et.updateEmployee(employee_type);
                 break;
             }
 			default:
