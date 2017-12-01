@@ -10,7 +10,7 @@
 #include "Employee_Store.h"
 #include "util.h"
 
-#define DEBUG true
+#define DEBUG false
 
 using std::string;
 using std::cout;
@@ -32,44 +32,57 @@ void init() {
     cout << "Are you new? 0 = exit, 1 = yes, 2 = no" << endl;
 
     switch_validate(choice);
-    switch (choice) {
-        case 0: {
-            cout << "Goodbye!" << endl;
-            return;
-            break;
+
+    //while(true) {
+        switch (choice) {
+            case 0: {
+                cout << "Goodbye!" << endl;
+                return;
+                break;
+            }
+            case 1: {
+                cout << "Please create an account" << endl;
+
+                cout << "Please enter user name" << endl;
+                cin.ignore();
+                string user_name;
+                std::getline(cin, user_name);
+
+                cin.clear();
+
+                cout << "Now please enter password" << endl;
+                string password;
+                std::getline(cin, password);
+
+                create_account(user_name, password);
+                menu(user_name);
+                break;
+            }
+            case 2: {
+                cout << "Enter details" << endl;
+                string name;
+                cin.ignore();
+                std::getline(cin, name);
+                vector<Account> users = get_users();
+
+                for(auto& u : users) {
+                    if(u.get_name() == name) {
+                        cout << "Welcome " << name << endl;
+                        menu(name);
+                    }
+                }
+                break;
+            }
+            default:
+                cout << "Invalid number (0 = exit, 1 = yes, 2 = no)" << endl;
+                break;
         }
-        case 1: {
-            cout << "Please create an account" << endl;
+    //}
 
-            cout << "Please enter user name" << endl;
-            cin.ignore();
-            string user_name;
-            std::getline(cin, user_name);
-
-            cin.clear();
-
-            cout << "Now please enter password" << endl;
-            string password;
-            std::getline(cin, password);
-
-            create_account(user_name, password);
-            menu(user_name);
-            break;
-        }
-        case 2: {
-            cout << "Enter details" << endl;
-            vector<Account> users = get_users();
-
-
-            break;
-        }
-        default:
-            cout << "Invalid number (0 = exit, 1 = yes, 2 = no)" << endl;
-            break;
-    }
 }
 
 void menu(string user) {
+    cout << "Welcome " << firstName(user) << "!" << endl;
     int choice;
 
     Employee_Store et;
@@ -90,15 +103,37 @@ void menu(string user) {
             }
 
             case 2: {
-                cout << "Case 2" << endl;
+                cout << "Display employees sorted by one of the following properties" << endl;
+                display_file("menus/sort_menu.txt");
+                int sort_by;
+                switch_validate(sort_by);
+
+                switch(sort_by) {
+
+                    case 1: {
+
+                        break;
+                    }
+
+                    case 2: {
+                        break;
+                    }
+
+                    case 3: {
+                        break;
+                    }
+                }
+
                 break;
             }
 
             case 3: {
+                et.printEmployees(true);
                 break;
             }
 
             case 4: {
+                et.printEmployees(false);
                 break;
             }
 
@@ -156,7 +191,7 @@ void menu(string user) {
                     cout << "Deletion aborted" << endl;
                     break;
                 }
-                while(index < -1 || !et.in_range(index)) {
+                while(index < -1 || !et.inRange(index)) {
 
                     if(index < -1) {
                         std::cerr << "Please enter a positive value or enter -1 to abort deletion" << endl;
@@ -172,6 +207,14 @@ void menu(string user) {
             }
 
             case 7: {
+
+                cout << "Update employee" << endl;
+                et.updateEmployee();
+                break;
+            }
+            case 8: {
+                string filePath = "users/"+user+".txt";
+                et.saveChanges(filePath);
                 break;
             }
             default:

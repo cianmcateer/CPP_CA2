@@ -1,6 +1,8 @@
 #pragma once
+
 #include <iostream>
 #include <string>
+#include <ostream>
 
 class Employee
 {
@@ -16,6 +18,9 @@ class Employee
 		virtual ~Employee(){}
 		virtual void print()=0;
 
+
+
+		virtual std::string save()=0;
 		inline void setName(std::string name)
 		{
 			this->name = name;
@@ -42,5 +47,6 @@ class Employee
 			return hours;
 		}
 
-		friend bool operator <(const Employee& e1, const Employee& e2);
+		friend bool operator<(const Employee& e1, const Employee& e2);
+		
 };

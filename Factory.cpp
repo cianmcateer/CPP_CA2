@@ -10,3 +10,8 @@ Factory::~Factory() {}
 void Factory::print() {
     std::cout << "Name: " << name << " Age: " << age << " Hours: " << hours << " Wages: " << wage << std::endl;
 }
+
+std::string Factory::save() {
+    std::string details = name +", "+ std::to_string(age) +", "+ std::to_string(hours) +", "+std::to_string( wage);
+	return details;
+}
