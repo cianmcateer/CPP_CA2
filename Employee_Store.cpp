@@ -77,13 +77,39 @@ void Employee_Store::erase(int& index) {
     employeeStore.erase(employeeStore.begin() + index);
 }
 
-void Employee_Store::updateEmployee()
+void Employee_Store::updateEmployee(int& employee_type)
 {
-	bool menu = true;
-	int menuSelect;
+	int index;
 	std::string search;
 	
-	int index;
+	if(employee_type == 1) {
+		std::cout << "Factory Employees:" << std::endl;
+		for(Employee* e : employeeStore)
+		{
+			if(dynamic_cast<Factory*>(e)) {
+				e->print();
+				
+			}
+		}
+	}
+	else{
+		std::cout << "Office Employees:" << std::endl;
+			for(Employee* e : employeeStore)
+			{
+				if(dynamic_cast<Office*>(e)) {
+					e->print();
+				
+			}
+		}	
+			
+	}
+		
+	std::cout << "\nEnter employee name to begin editing"<< std::endl;
+	std::cout << "> ";
+	std::cin.ignore();
+	std::getline(std::cin,search);
+	
+	bool menu = true;
 	
 	std::string newName;
 	int newAge;
@@ -92,31 +118,27 @@ void Employee_Store::updateEmployee()
 	float newWage;
 	float newSalary;
 	
-	std::cout << "\nEnter employee name to begin editing"<< std::endl;
-	std::cout << "> ";
-	std::cin.ignore();
-	std::getline(std::cin,search);
-	
-	for(unsigned int i = 0;i < employeeStore.size();++i) {
-      if(search == employeeStore[i]->getName())
-	  {
-		index = i;
+	while(menu == true){
 		
+		for(unsigned int i = 0;i < employeeStore.size();++i) {
+			if(search == employeeStore[i]->getName())
+			{			
+				index = i;
+			}
+		}
+				
 		std::cout << "\nEdit "<< employeeStore[index]->getName()<<"'s details" <<std::endl;
-			while(menu == true){
-			std::cout << "+----------------------------+" << std::endl;
-			std::cout << "|      ::Editing Menu::      |" << std::endl;
-			std::cout << "|                            |" << std::endl;
-			std::cout << "|-Edit name..............[1] |" << std::endl;
-			std::cout << "|-Edit age...............[2] |" << std::endl;
-			std::cout << "|-Edit hours.............[3] |" << std::endl;
-			std::cout << "|-Edit Email.............[4] |" << std::endl;
-			std::cout << "|-Edit salary............[5] |" << std::endl;
-			std::cout << "|-Edit Wages.............[6] |" << std::endl;
-			std::cout << "+----------------------------+" << std::endl;
-			std::cout << "\n> ";
-			std::cin >> menuSelect;
-			std::cin.ignore(); 
+		if(employee_type == 1) {
+			
+			display_file("menus/factory_edit.txt");
+		}
+		else{
+			display_file("menus/office_edit.txt");
+		}
+	
+		int menuSelect;
+		std::cin >> menuSelect; 
+		std::cin.ignore();
 			
 			switch(menuSelect) {
 				case 1 :
@@ -163,20 +185,15 @@ void Employee_Store::updateEmployee()
 					break;
 				}
 				case 0 :
-					return;
+					menu = false;
 					break;
 			}	
 		
-		}
+		
 	  }
 	 
-    
-	
-	
-	}
-	
 }
-
+	
 void Employee_Store::sortEmployees() 
 {
 	std::string search;
@@ -240,8 +257,6 @@ void Employee_Store::saveChanges()
 	std::ofstream employeefileWrite;
 	employeefileWrite.open("save.txt");
 	std::string employeeDetails;
-	
 	employeefileWrite << save();
 		
-	
 }
