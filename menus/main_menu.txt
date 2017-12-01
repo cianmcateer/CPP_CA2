@@ -9,4 +9,5 @@
 *   5. Add employee                         *
 *   6. Delete employee                      *
 *   7. Update employee                      *
+*   8. Save changes                         *
 /********************************************/

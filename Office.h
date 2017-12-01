@@ -16,6 +16,10 @@ public:
     Office(std::string name, int age, int hours, std::string email, float salary);
     virtual ~Office();
 
+    void extract_data(std::ostream& out);
+
+    std::string save();
+
     inline std::string getEmail() const {
         return email;
     }
