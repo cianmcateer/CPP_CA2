@@ -33,5 +33,6 @@ public:
 	void updateEmployee(int& employee_type);
 	void sortEmployees();
 	std::string save();
+	void create_webpage();
 	void saveChanges();
 };
