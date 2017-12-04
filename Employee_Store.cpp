@@ -253,10 +253,10 @@ void Employee_Store::sortEmployees()
 }
 
 void Employee_Store::create_webpage() {
-    std::ofstream html_page("e-school.html");
+    std::ofstream html_page("worker_catalogue.html");
     // HTML header tags
     html_page << "<!DOCTYPE html><html><head>"; // Header tags
-    html_page << "<link href=\"school_page.css\" rel=\"stylesheet\">"; // Style sheet link
+    html_page << "<link href=\"worker_page.css\" rel=\"stylesheet\">"; // Style sheet link
     html_page << "</head><body>";
     html_page << "<h1></h1>";
     html_page << "<img>";
