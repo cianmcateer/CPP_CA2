@@ -1,9 +1,14 @@
 #include "Employee_Store.h"
 
-Employee_Store::Employee_Store() {
-    this->employeeStore = load();
-}
+Employee_Store::Employee_Store(std::string path)
+: employeeStore(read(path)) {}
 
+/**
+* Testing and backup data in case
+* read file fails
+* @author Cian McAteer
+* @return backup
+*/
 std::vector<Employee*> Employee_Store::load() {
 
     Office* o1 = new Office("Cian McAteer", 22, 40,"cian@email.com", 1200);
@@ -34,7 +39,9 @@ std::vector<Employee*> Employee_Store::load() {
 inline std::vector<Employee*> Employee_Store::getEmployeeStore() const {
     return employeeStore;
 }
-
+/**
+* @author Ciaran Maher
+*/
 void Employee_Store::print() {
     std::cout << "Current number of employees: " << employeeStore.size() << "." << std::endl;
     for(Employee* e : employeeStore) {
@@ -42,6 +49,9 @@ void Employee_Store::print() {
     }
 }
 
+/**
+* Destructor must delete heap allocated object pointers
+*/
 Employee_Store::~Employee_Store() {
     for(Employee* e : employeeStore) {
         delete e;
@@ -49,28 +59,46 @@ Employee_Store::~Employee_Store() {
     employeeStore.clear();
 }
 
+/**
+* @author Cian McAteer
+*/
 void Employee_Store::add(Employee* e) {
     employeeStore.push_back(e);
 }
 
+/**
+* @author Cian McAteer
+*/
 bool Employee_Store::inRange(int& index) {
     return index < employeeStore.size();
 }
 
+/**
+* @author Cian McAteer
+*/
 void Employee_Store::show_index() {
     for(unsigned int i = 0;i < employeeStore.size();++i) {
         std::cout << "Index: " << i << " Name: " << employeeStore[i]->getName() << "." << std::endl;
     }
 }
 
+/**
+* @author Cian McAteer
+*/
 void Employee_Store::erase(int& index) {
     employeeStore.erase(employeeStore.begin() + index);
 }
 
+/**
+* @author Cian McAteer
+*/
 void Employee_Store::clear() {
     employeeStore.clear();
 }
 
+/***
+* @author Ciaran Maher
+*/
 void Employee_Store::updateEmployee()
 {
 	bool menu = true;
@@ -149,25 +177,31 @@ void Employee_Store::updateEmployee()
 
 }
 
-std::string Employee_Store::save() {
+/**
+* Writes employee objects to save file
+* using a virtual save method
+* for each subclass
+* @author Cian McAteer
+* @param fileName
+*/
+void Employee_Store::save(std::string fileName) {
 
-	std::string details;
+    std::ofstream employeefileWrite;
+	employeefileWrite.open(fileName.c_str());
 
-    for(Employee* e : employeeStore) {
-        details = details + e->save()+ "\n";
+    if(employeefileWrite.is_open()) {
+        for(Employee* e : employeeStore) {
+            employeefileWrite << e->save();
+        }
+    } else {
+        std::cerr << "Could not save data" << std::endl;
     }
 
-	return details;
 }
 
-void Employee_Store::saveChanges(std::string fileName) {
-	std::ofstream employeefileWrite;
-	employeefileWrite.open(fileName.c_str());
-	std::string employeeDetails;
-
-	employeefileWrite << save();
-}
-
+/**
+* @author Ciaran Maher
+*/
 void Employee_Store::printEmployees(bool type) {
 
     if(type) {
@@ -184,4 +218,55 @@ void Employee_Store::printEmployees(bool type) {
         }
     }
 
+}
+
+/**
+* @author Cian McAteer
+*/
+std::vector<Employee*> Employee_Store::read(std::string path) {
+    std::ifstream data(path);
+
+    std::vector<Employee*> employees;
+    if(data.is_open()) {
+        std::string line;
+        std::vector<std::string> lines;
+
+        while(getline(data, line)) {
+            lines.push_back(line);
+        }
+
+        std::string type;
+        std::string name;
+        int age;
+        int hours;
+        float wages;
+
+        std::string email;
+        float salary;
+        for(unsigned int i = 0;i < lines.size();++i) {
+            std::stringstream ss(lines[i]);
+            while(ss >> type) {
+
+                if(type == "Factory") {
+                    while(ss >> name >> age >> hours >> wages) {
+                        std::replace(name.begin(), name.end(), '-', ' ');
+                        Employee* e = new Factory(name, age, hours, wages);
+                        employees.push_back(e);
+                    }
+                } else {
+                    while(ss >> name >> age >> hours >> email >> salary) {
+                        std::replace(name.begin(), name.end(), '-', ' ');
+                        Employee* e = new Office(name, age, hours, email, salary);
+                        employees.push_back(e);
+                    }
+                }
+            }
+        }
+    } else {
+        std::cerr << "Can't open save file" << std::endl;
+        employees = load();
+        std::cerr << "Back up file has been implemented!" << std::endl;
+    }
+
+    return employees;
 }

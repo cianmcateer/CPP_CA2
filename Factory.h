@@ -1,16 +1,27 @@
 #pragma once
-#include <iostream>
 
 #include "Employee.h"
 
-class Factory: public Employee {
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <algorithm>
+
+/**
+* @author Ciaran Maher
+*/
+class Factory : public Employee {
 private:
 		float wage;
 public:
 	void print();
     Factory();
     Factory(std::string name, int age, int hours, float wage);
-    virtual ~Factory();
+
+	std::string save();
+    ~Factory();
 
 	void extract_data(std::ostream& out);
 
@@ -21,5 +32,7 @@ public:
     inline void setWage(float wage) {
         this->wage = wage;
     }
-	std::string save();
+
+
+
 };

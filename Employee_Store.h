@@ -4,7 +4,7 @@
 #include <string>
 #include <typeinfo>
 #include <fstream>
-
+#include <algorithm>
 
 #include "Employee.h"
 #include "Office.h"
@@ -15,8 +15,9 @@ class Employee_Store {
 private:
     std::vector<Employee*> employeeStore;
     std::vector<Employee*> load();
+    std::vector<Employee*> read(std::string path);
 public:
-    Employee_Store();
+    Employee_Store(std::string path);
     ~Employee_Store();
 
 
@@ -31,8 +32,7 @@ public:
     void clear();
     void updateEmployee();
 
-    std::string save();
-    void saveChanges(std::string fileName);
+    void save(std::string fileName);
     void printEmployees(bool type);
 
 };

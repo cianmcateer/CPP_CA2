@@ -1,7 +1,14 @@
-#include <iostream>
-#include <string>
+#pragma once
 
 #include "Employee.h"
+
+#include <iostream>
+#include <string>
+#include <fstream>
+#include <vector>
+#include <sstream>
+
+
 
 class Office: public Employee {
 
@@ -14,7 +21,8 @@ public:
     void print();
     Office();
     Office(std::string name, int age, int hours, std::string email, float salary);
-    virtual ~Office();
+    ~Office();
+
 
     void extract_data(std::ostream& out);
 

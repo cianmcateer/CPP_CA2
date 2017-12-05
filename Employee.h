@@ -3,6 +3,9 @@
 #include <iostream>
 #include <string>
 #include <ostream>
+#include <sstream>
+#include <algorithm>
+
 
 class Employee
 {
@@ -15,12 +18,11 @@ class Employee
 		Employee(std::string name, int age, int hours);
 
 	public:
-		virtual ~Employee(){}
+		virtual ~Employee();
 		virtual void print()=0;
 
-
-
 		virtual std::string save()=0;
+
 		inline void setName(std::string name)
 		{
 			this->name = name;
@@ -47,6 +49,6 @@ class Employee
 			return hours;
 		}
 
-		friend bool operator<(const Employee& e1, const Employee& e2);
-		
+
+
 };

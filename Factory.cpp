@@ -4,6 +4,7 @@ Factory::Factory(std::string name, int age, int hours, float wage)
 : Employee(name, age, hours), wage(wage) {}
 
 Factory::Factory() {}
+
 Factory::~Factory() {}
 
 
@@ -12,6 +13,12 @@ void Factory::print() {
 }
 
 std::string Factory::save() {
-    std::string details = name +", "+ std::to_string(age) +", "+ std::to_string(hours) +", "+std::to_string( wage);
-	return details;
+    std::stringstream ss;
+
+    std::replace(name.begin(), name.end(), ' ', '-');
+    ss << "Factory" << " " << name << " " << age
+    << " " << hours << " " << wage << std::endl;
+
+    std::replace(name.begin(), name.end(), '-', ' ');
+    return ss.str();
 }

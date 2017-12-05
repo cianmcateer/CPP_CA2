@@ -10,6 +10,7 @@
 #include "Employee_Store.h"
 #include "util.h"
 
+
 #define DEBUG false
 
 using std::string;
@@ -22,7 +23,7 @@ void init();
 void menu(string user);
 
 int main(void) {
-    DEBUG ? menu("Test") : init();
+    DEBUG ? menu("tester") : init();
     return 0;
 }
 
@@ -67,7 +68,6 @@ void init() {
 
                 for(auto& u : users) {
                     if(u.get_name() == name) {
-                        cout << "Welcome " << name << endl;
                         menu(name);
                     }
                 }
@@ -85,7 +85,9 @@ void menu(string user) {
     cout << "Welcome " << firstName(user) << "!" << endl;
     int choice;
 
-    Employee_Store et;
+    std::replace(user.begin(), user.end(), ' ', '_');
+    Employee_Store et("users/"+user+".txt");
+    std::replace(user.begin(), user.end(), '_', ' ');
     while(true) {
         display_file("menus/main_menu.txt");
         switch_validate(choice);
@@ -213,8 +215,10 @@ void menu(string user) {
                 break;
             }
             case 8: {
+                std::replace(user.begin(), user.end(), ' ', '_');
                 string filePath = "users/"+user+".txt";
-                et.saveChanges(filePath);
+                et.save(filePath);
+                std::replace(user.begin(), user.end(), '_', ' ');
                 break;
             }
             default:
