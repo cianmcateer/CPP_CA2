@@ -10,7 +10,6 @@
 #include "Employee_Store.h"
 #include "util.h"
 
-
 #define DEBUG false
 
 using std::string;
@@ -165,6 +164,9 @@ void menu(string user) {
 
                     Factory* f = new Factory(name, age, hours, wage);
                     et.add(f);
+
+                    std::string message = "Factory worker, '" + name + "' was added by " + user + " on";
+                    addLog(message);
                 }
                 if(employee_type == 2) {
                     cout << "Enter staff email" << endl;
@@ -178,6 +180,8 @@ void menu(string user) {
 
                     Office* o = new Office(name, age, hours, email, salary);
                     et.add(o);
+                    std::string message = "Office worker, '" + name + "' was added by " + user + " on";
+                    addLog(message);
                 }
                 break;
             }
@@ -205,6 +209,7 @@ void menu(string user) {
                     }
                 }
                 et.erase(index);
+                addLog("Employee was deleted by " + user + " on");
                 break;
             }
 
@@ -219,6 +224,12 @@ void menu(string user) {
                 string filePath = "users/"+user+".txt";
                 et.save(filePath);
                 std::replace(user.begin(), user.end(), '_', ' ');
+                addLog(user + " altered his save data on ");
+                break;
+            }
+            case 9 : {
+                et.createWebpage();
+                cout << "Your webpage has been created" << endl;
                 break;
             }
             default:

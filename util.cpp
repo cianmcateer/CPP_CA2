@@ -94,3 +94,40 @@ void display_file(const std::string path) {
 std::string firstName(std::string user) {
     return user.substr(0,user.find(' '));
 }
+
+/**
+* @author Cian McAteer
+*/
+std::string getTime() {
+    // current date/time based on current system
+   time_t now = time(0);
+
+   // convert now to string form
+   char* dt = ctime(&now);
+
+   // convert now to tm struct
+   tm *gmtm = gmtime(&now);
+   dt = asctime(gmtm);
+
+   // Add to string stream so we can convert to string
+   std::stringstream ss;
+   ss << dt;
+
+   // Convert to string before return
+   return ss.str();
+}
+
+
+/**
+* @author Cian McAteer
+*/
+void addLog(std::string message) {
+    // Append students instead of overwritting students
+    std::ofstream user_log("logs.txt",std::fstream::in | std::ios::out | std::ios::app);
+    if(user_log.is_open()) {
+       user_log << message << " " << getTime();
+       std::cout << std::endl;
+    } else {
+        std::cerr << "Unable to open log file" << std::endl;
+    }
+}

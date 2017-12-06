@@ -270,3 +270,62 @@ std::vector<Employee*> Employee_Store::read(std::string path) {
 
     return employees;
 }
+
+/**
+* @author Cian McAteer
+*/
+std::stack<std::string> Employee_Store::readLog() {
+    std::stack<std::string> logs;
+
+    return logs;
+}
+
+/**
+* @author Ciaran Maher
+*/
+void Employee_Store::createWebpage() {
+    std::ofstream html_page("worker_catalogue.html");
+    // HTML header tags
+    html_page << "<!DOCTYPE html><html><head>"; // Header tags
+    html_page << "<link href=\"worker_page.css\" rel=\"stylesheet\">"; // Style sheet link
+    html_page << "</head><body>";
+    html_page << "<h1></h1>";
+    html_page << "<img>";
+    html_page << "<table border='1'>";
+    html_page << "<h2>Office Workers</h2>";
+    html_page << "<tr><td class='title'>Name</td><td class='title'>Age</td><td class='title'>Hours</td><td class='title'>Email</td><td class='title'>Salary</td></tr>";
+    for(Employee* e : employeeStore) {
+		if(dynamic_cast<Office*>(e)){
+			Office* o = dynamic_cast<Office*>(e);
+            html_page << "<tr>";
+			html_page << "<td>" << e->getName() << "</td>"; // Converts to HTML string
+			html_page << "<td>" << e->getAge() << "</td>"; // Converts to HTML string
+			html_page << "<td>" << e->getHours() << "</td>"; // Converts to HTML string
+			html_page << "<td>" << o->getEmail() << "</td>"; // Converts to HTML string
+			html_page << "<td>" << o->getSalary() << "</td>"; // Converts to HTML string
+		}
+        html_page << "</tr>";
+    }
+    
+    html_page << "</table>";
+	html_page << "<table border='1'>";
+    html_page << "<h2>Factory Workers</h2>";
+    html_page << "<tr><td class='title'>Name</td><td class='title'>Age</td><td class='title'>Hours</td><td class='title'>Wages</td></tr>";
+    for(Employee* e : employeeStore) {
+		if(dynamic_cast<Factory*>(e)){
+			Factory* f = dynamic_cast<Factory*>(e);
+			html_page << "<tr>";
+			html_page << "<td>" << e->getName() << "</td>"; // Converts to HTML string
+			html_page << "<td>" << e->getAge() << "</td>"; // Converts to HTML string
+			html_page << "<td>" << e->getHours() << "</td>"; // Converts to HTML string
+			html_page << "<td>" << f->getWage() << "</td>"; // Converts to HTML string
+		}
+        html_page << "</tr>";
+    }
+    html_page << "</table>";
+
+    // Close off page and end connection
+    html_page << "</body></html>";
+    html_page.close();
+
+}
