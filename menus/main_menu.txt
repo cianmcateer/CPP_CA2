@@ -10,4 +10,6 @@
 *   6. Delete employee                      *
 *   7. Update employee                      *
 *   8. Save changes                         *
+*   9. HTML page                            *
+*   10. View Logs                           *
 /********************************************/

@@ -276,7 +276,16 @@ std::vector<Employee*> Employee_Store::read(std::string path) {
 */
 std::stack<std::string> Employee_Store::readLog() {
     std::stack<std::string> logs;
+    std::ifstream readLogs("logs.txt");
 
+    if(readLogs.is_open()) {
+        std::string line;
+        while(getline(readLogs, line)) {
+            logs.push(line);
+        }
+    } else {
+        std::cerr << "Error opening log file" << std::endl;
+    }
     return logs;
 }
 
@@ -306,7 +315,7 @@ void Employee_Store::createWebpage() {
 		}
         html_page << "</tr>";
     }
-    
+
     html_page << "</table>";
 	html_page << "<table border='1'>";
     html_page << "<h2>Factory Workers</h2>";
@@ -328,4 +337,19 @@ void Employee_Store::createWebpage() {
     html_page << "</body></html>";
     html_page.close();
 
+}
+
+/**
+* @author Cian McAteer
+*/
+void Employee_Store::displayLogs() {
+
+    std::stack<std::string> logs = readLog();
+    std::cout << "Log size " << logs.size() << std::endl;
+
+    while(!logs.empty()) {
+        // Print last element added to stack
+        std::cout << logs.top() << std::endl;
+        logs.pop(); // Pop element off to print next element
+    }
 }

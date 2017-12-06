@@ -38,6 +38,6 @@ public:
     void save(std::string fileName);
     void printEmployees(bool type);
 
-    void displayLog();
+    void displayLogs();
     void createWebpage();
 };

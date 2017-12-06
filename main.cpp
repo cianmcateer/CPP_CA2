@@ -151,11 +151,11 @@ void menu(string user) {
 
                 cout << "Enter age" << endl;
                 int age;
-                cin >> age;
+                switch_validate(age);
 
                 cout << "Enter hours" << endl;
                 int hours;
-                cin >> hours;
+                switch_validate(hours);
 
                 if(employee_type == 1) {
                     cout << "Enter wage of worker" << endl;
@@ -230,6 +230,11 @@ void menu(string user) {
             case 9 : {
                 et.createWebpage();
                 cout << "Your webpage has been created" << endl;
+                break;
+            }
+            case 10 : {
+                cout << "Logs display" << endl;
+                et.displayLogs();
                 break;
             }
             default:
