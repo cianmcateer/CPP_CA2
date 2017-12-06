@@ -117,7 +117,6 @@ std::string getTime() {
    return ss.str();
 }
 
-
 /**
 * @author Cian McAteer
 */
@@ -129,5 +128,31 @@ void addLog(std::string message) {
        std::cout << std::endl;
     } else {
         std::cerr << "Unable to open log file" << std::endl;
+    }
+}
+
+/**
+* @author Cian McAteer
+*/
+bool regexValidate(std::string text, std::string regex) {
+    std::regex validSyntax(regex);
+    if(std::regex_match(text, validSyntax)) {
+        return true;
+    }
+    return false;
+}
+
+/**
+* @author Cian McAteer
+*/
+void ageRestriction(int& age) {
+    while(age < 17 || age > 65) {
+        if(age < 17) {
+            std::cout << "Sorry age is restricted to people 17 and over" << std::endl;
+        }
+        if(age > 65) {
+            std::cout << "Sorry, age limit is 65 years old" << std::endl;
+        }
+        switch_validate(age);
     }
 }

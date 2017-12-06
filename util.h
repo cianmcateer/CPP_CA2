@@ -5,6 +5,7 @@
 #include <fstream>
 #include <algorithm>
 #include <sstream>
+#include <regex>
 
 #include "Account.h"
 
@@ -18,3 +19,6 @@ void display_file(const std::string path);
 std::string firstName(std::string name);
 std::string getTime();
 void addLog(std::string message);
+
+bool regexValidate(std::string text, std::string regex);
+void ageRestriction(int& age);

@@ -10,7 +10,7 @@
 #include "Employee_Store.h"
 #include "util.h"
 
-#define DEBUG false
+#define DEBUG true
 
 using std::string;
 using std::cout;
@@ -145,22 +145,47 @@ void menu(string user) {
                 switch_validate(employee_type);
 
                 cout << "Enter name" << endl;
+                std::string nameRegex = "[a-z\A-Z ,.'-]+$";
                 string name;
                 cin.ignore();
                 std::getline(cin, name);
+
+                while(!regexValidate(name, nameRegex)) {
+                    cout << "Incorrect name input (No special characters or digits)" << endl;
+                    cin.clear();
+                    std::getline(cin, name);
+                }
 
                 cout << "Enter age" << endl;
                 int age;
                 switch_validate(age);
 
+                ageRestriction(age);
+
                 cout << "Enter hours" << endl;
                 int hours;
                 switch_validate(hours);
+
+                while(hours > 48) {
+                    cout << "Legally, the weekly working limit is 48 hours or under, please try again" << endl;
+                    cin.clear();
+                    switch_validate(hours);
+                }
+
 
                 if(employee_type == 1) {
                     cout << "Enter wage of worker" << endl;
                     float wage;
                     cin >> wage;
+
+                    const float min_wage = 9.25;
+
+                    while((wage / hours) < min_wage) {
+                        cout << name << " is being underpayed, please enter a higher value." << endl;
+                        cout << "Minimum payment: " << hours * min_wage << "!" << endl;
+                        cin.clear();
+                        cin >> wage;
+                    }
 
                     Factory* f = new Factory(name, age, hours, wage);
                     et.add(f);
@@ -174,12 +199,27 @@ void menu(string user) {
                     string email;
                     std::getline(cin, email);
 
+                    const std::string emailRegex = "(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+";
+                    while(!regexValidate(email, emailRegex)) {
+                        cout << "Invalid email address" << endl;
+                        cin.clear();
+                        std::getline(cin, email);
+                    }
                     cout << "Enter staff salary" << endl;
                     float salary;
                     cin >> salary;
 
+                    const float min_wage = 9.25;
+                    while((salary / hours) < min_wage) {
+                        cout << firstName(name) << " is being underpayed, please enter a higher value." << endl;
+                        cout << "Minimum payment: " << hours * min_wage << "!" << endl;
+                        cin.clear();
+                        cin >> salary;
+                    }
+
                     Office* o = new Office(name, age, hours, email, salary);
                     et.add(o);
+                    
                     std::string message = "Office worker, '" + name + "' was added by " + user + " on";
                     addLog(message);
                 }
