@@ -147,13 +147,13 @@ void Employee_Store::updateEmployee()
     					std::cout << "Edit name:";
     					std::getline(std::cin,newName);
     					employeeStore[index]->setName(newName);
-    					std::cout <<employeeStore[index]->getName()<<" "<<employeeStore[index]->getAge() <<" "<<employeeStore[index]->getHours()<< std::endl;
+    					std::cout << employeeStore[index]->getName() << " " << employeeStore[index]->getAge() << " " << employeeStore[index]->getHours() << std::endl;
     					break;
     				case 2 :
     					std::cout << "Edit Age:";
     					std::cin >> newAge;
     					employeeStore[index]->setAge(newAge);
-    					std::cout <<employeeStore[index]->getName()<<" "<<employeeStore[index]->getAge() <<" "<<employeeStore[index]->getHours()<< std::endl;
+    					std::cout << employeeStore[index]->getName() << " "<< employeeStore[index]->getAge() << " "<< employeeStore[index]->getHours() << std::endl;
     					break;
 
     				case 3 :
@@ -197,6 +197,82 @@ void Employee_Store::save(std::string fileName) {
         std::cerr << "Could not save data" << std::endl;
     }
 
+}
+
+/**
+* @author Cian McAteer
+*/
+void Employee_Store::history() {
+    // Append students instead of overwritting students
+    std::ofstream employeeRecords("records.txt",std::fstream::in | std::ios::out | std::ios::app);
+
+    if(employeeRecords.is_open()) {
+        for(Employee* e : employeeStore) {
+            employeeRecords << e-> save();
+        }
+    } else {
+        std::cerr << "Records could not be accessed" << std::endl;
+    }
+}
+
+/**
+* @author Cian McAteer
+*/
+std::set<Employee*> Employee_Store::getRecords() {
+    std::set<Employee*> records;
+    std::ifstream history("records.txt");
+
+    if(history.is_open()) {
+
+        std::string line;
+        std::set<std::string> lines;
+
+        while(getline(history, line)) {
+            lines.insert(line);
+        }
+
+        std::string type;
+        std::string name;
+        int age;
+        int hours;
+        float wages;
+
+        std::string email;
+        float salary;
+        for(const std::string& line : lines) {
+            std::stringstream ss(line);
+            while(ss >> type) {
+                if(type == "Factory") {
+                    while(ss >> name >> age >> hours >> wages) {
+                        std::replace(name.begin(), name.end(), '-', ' ');
+                        Employee* e = new Factory(name, age, hours, wages);
+                        records.insert(e);
+                    }
+                } else {
+                    while(ss >> name >> age >> hours >> email >> salary) {
+                        std::replace(name.begin(), name.end(), '-', ' ');
+                        Employee* e = new Office(name, age, hours, email, salary);
+                        records.insert(e);
+                    }
+                }
+            }
+
+        }
+    } else {
+        std::cerr << "Could not retrieve records from database" << std::endl;
+    }
+    return records;
+}
+
+/**
+* @author Cian McAteer
+*/
+void Employee_Store::show_history() {
+    std::set<Employee*> records = getRecords();
+
+    for(Employee* e : records) {
+        e->print();
+    }
 }
 
 /**

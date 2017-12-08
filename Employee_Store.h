@@ -6,6 +6,7 @@
 #include <fstream>
 #include <algorithm>
 #include <stack>
+#include <set>
 
 #include "Employee.h"
 #include "Office.h"
@@ -20,6 +21,7 @@ private:
     std::stack<std::string> readLog();
 
     std::string getTime();
+    std::set<Employee*> getRecords();
 
 public:
     Employee_Store(std::string path);
@@ -36,6 +38,10 @@ public:
     void updateEmployee();
 
     void save(std::string fileName);
+
+    void history();
+    void show_history();
+
     void printEmployees(bool type);
 
     void displayLogs();

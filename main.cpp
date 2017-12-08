@@ -219,7 +219,7 @@ void menu(string user) {
 
                     Office* o = new Office(name, age, hours, email, salary);
                     et.add(o);
-                    
+
                     std::string message = "Office worker, '" + name + "' was added by " + user + " on";
                     addLog(message);
                 }
@@ -265,6 +265,9 @@ void menu(string user) {
                 et.save(filePath);
                 std::replace(user.begin(), user.end(), '_', ' ');
                 addLog(user + " altered his save data on ");
+
+                et.history();
+                addLog(user + " Added data to records");
                 break;
             }
             case 9 : {
@@ -275,6 +278,10 @@ void menu(string user) {
             case 10 : {
                 cout << "Logs display" << endl;
                 et.displayLogs();
+                break;
+            }
+            case 11 : {
+                et.show_history();
                 break;
             }
             default:
