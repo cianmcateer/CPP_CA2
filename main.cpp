@@ -121,90 +121,99 @@ void menu(string user) {
             }
 
             case 5: {
-                cout << "Add employee" << endl;
-                cout << "please enter 1 for factory worker, 2 for office staff" << endl;
-                int employee_type;
-                switch_validate(employee_type);
 
-                cout << "Enter name" << endl;
-                std::string nameRegex = "[a-z\A-Z ,.'-]+$";
-                string name;
-                cin.ignore();
-                std::getline(cin, name);
+                char repeat = 'Y';
 
-                while(!regexValidate(name, nameRegex)) {
-                    cout << "Incorrect name input (No special characters or digits)" << endl;
-                    cin.clear();
-                    std::getline(cin, name);
-                }
+                while(repeat == 'Y' || repeat == 'y') {
+                    cout << "Add employee" << endl;
+                    cout << "please enter 1 for factory worker, 2 for office staff" << endl;
+                    int employee_type;
+                    switch_validate(employee_type);
 
-                cout << "Enter age" << endl;
-                int age;
-                switch_validate(age);
-
-                ageRestriction(age);
-
-                cout << "Enter hours" << endl;
-                int hours;
-                switch_validate(hours);
-
-                while(hours > 48) {
-                    cout << "Legally, the weekly working limit is 48 hours or under, please try again" << endl;
-                    cin.clear();
-                    switch_validate(hours);
-                }
-
-
-                if(employee_type == 1) {
-                    cout << "Enter wage of worker" << endl;
-                    float wage;
-                    cin >> wage;
-
-                    const float min_wage = 9.25;
-
-                    while((wage / hours) < min_wage) {
-                        cout << name << " is being underpayed, please enter a higher value." << endl;
-                        cout << "Minimum payment: " << hours * min_wage << "!" << endl;
-                        cin.clear();
-                        cin >> wage;
-                    }
-
-                    Factory* f = new Factory(name, age, hours, wage);
-                    et.add(f);
-
-                    std::string message = "Factory worker, '" + name + "' was added by " + user + " on";
-                    addLog(message);
-                }
-                if(employee_type == 2) {
-                    cout << "Enter staff email" << endl;
+                    cout << "Enter name" << endl;
+                    std::string nameRegex = "[a-zA-Z ,.'-]+$";
+                    string name;
                     cin.ignore();
-                    string email;
-                    std::getline(cin, email);
+                    std::getline(cin, name);
 
-                    const std::string emailRegex = "(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+";
-                    while(!regexValidate(email, emailRegex)) {
-                        cout << "Invalid email address" << endl;
+                    while(!regexValidate(name, nameRegex)) {
+                        cout << "Incorrect name input (No special characters or digits)" << endl;
                         cin.clear();
+                        std::getline(cin, name);
+                    }
+
+                    cout << "Enter age" << endl;
+                    int age;
+                    switch_validate(age);
+
+                    ageRestriction(age);
+
+                    cout << "Enter hours" << endl;
+                    int hours;
+                    switch_validate(hours);
+
+                    while(hours > 48) {
+                        cout << "Legally, the weekly working limit is 48 hours or under, please try again" << endl;
+                        cin.clear();
+                        switch_validate(hours);
+                    }
+
+
+                    if(employee_type == 1) {
+                        cout << "Enter wage of worker" << endl;
+                        float wage;
+                        cin >> wage;
+
+                        const float min_wage = 9.25;
+
+                        while((wage / hours) < min_wage) {
+                            cout << name << " is being underpayed, please enter a higher value." << endl;
+                            cout << "Minimum payment: " << hours * min_wage << "!" << endl;
+                            cin.clear();
+                            cin >> wage;
+                        }
+
+                        Factory* f = new Factory(name, age, hours, wage);
+                        et.add(f);
+
+                        std::string message = "Factory worker, '" + name + "' was added by " + user + " on";
+                        addLog(message);
+                    }
+                    if(employee_type == 2) {
+                        cout << "Enter staff email" << endl;
+                        cin.ignore();
+                        string email;
                         std::getline(cin, email);
-                    }
-                    cout << "Enter staff salary" << endl;
-                    float salary;
-                    cin >> salary;
 
-                    const float min_wage = 9.25;
-                    while((salary / hours) < min_wage) {
-                        cout << firstName(name) << " is being underpayed, please enter a higher value." << endl;
-                        cout << "Minimum payment: " << hours * min_wage << "!" << endl;
-                        cin.clear();
+                        const std::string emailRegex = "(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+";
+                        while(!regexValidate(email, emailRegex)) {
+                            cout << "Invalid email address" << endl;
+                            cin.clear();
+                            std::getline(cin, email);
+                        }
+                        cout << "Enter staff salary" << endl;
+                        float salary;
                         cin >> salary;
+
+                        const float min_wage = 9.25;
+                        while((salary / hours) < min_wage) {
+                            cout << firstName(name) << " is being underpayed, please enter a higher value." << endl;
+                            cout << "Minimum payment: " << hours * min_wage << "!" << endl;
+                            cin.clear();
+                            cin >> salary;
+                        }
+
+                        Office* o = new Office(name, age, hours, email, salary);
+                        et.add(o);
+
+                        std::string message = "Office worker, '" + name + "' was added by " + user + " on";
+                        addLog(message);
                     }
-
-                    Office* o = new Office(name, age, hours, email, salary);
-                    et.add(o);
-
-                    std::string message = "Office worker, '" + name + "' was added by " + user + " on";
-                    addLog(message);
+                    cout << "Would you like to add another employee?" << endl;
+                    cout << "Yes(Y/y), No(any key)" << endl;
+                    cin >> repeat;
                 }
+
                 break;
             }
 
@@ -236,7 +245,6 @@ void menu(string user) {
             }
 
             case 7: {
-
                 cout << "Update employee" << endl;
                 et.updateEmployee();
                 break;
@@ -264,6 +272,19 @@ void menu(string user) {
             }
             case 11 : {
                 et.show_history();
+                break;
+            }
+            case 12 : {
+                std::replace(user.begin(), user.end(), ' ', '_');
+                string filePath = "users/"+user+".txt";
+                et.save(filePath);
+                std::replace(user.begin(), user.end(), '_', ' ');
+                addLog(user + " altered his save data on ");
+
+                et.history();
+                addLog(user + " Added data to records");
+                cout << "Goodbye!, your progress has been saved" << endl;
+                return;
                 break;
             }
             default:
