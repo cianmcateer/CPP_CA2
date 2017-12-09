@@ -10,7 +10,7 @@
 #include "Employee_Store.h"
 #include "util.h"
 
-#define DEBUG true
+#define DEBUG false
 
 using std::string;
 using std::cout;
@@ -29,7 +29,7 @@ int main(void) {
 void init() {
     cout << "Hello, Welcome to office block, your employee storage system!" << endl;
     int choice;
-    cout << "Are you new? 0 = exit, 1 = yes, 2 = no" << endl;
+    display_file("menus/login.txt");
 
     switch_validate(choice);
 
@@ -105,30 +105,12 @@ void menu(string user) {
 
             case 2: {
                 cout << "Display employees sorted by one of the following properties" << endl;
-                display_file("menus/sort_menu.txt");
-                int sort_by;
-                switch_validate(sort_by);
-
-                switch(sort_by) {
-
-                    case 1: {
-
-                        break;
-                    }
-
-                    case 2: {
-                        break;
-                    }
-
-                    case 3: {
-                        break;
-                    }
-                }
-
+                et.sortEmployees();
                 break;
             }
 
             case 3: {
+                cout << "Show " << endl;
                 et.printEmployees(true);
                 break;
             }
