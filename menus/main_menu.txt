@@ -12,4 +12,8 @@
 *   8. Save changes                         *
 *   9. HTML page                            *
 *   10. View Logs                           *
+*   11. View history                        *
+*   12. Save and Exit                       *
+*   13. Average hours                       *
+*   14. Average payment                     *
 /********************************************/

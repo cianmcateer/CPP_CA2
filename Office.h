@@ -9,7 +9,9 @@
 #include <sstream>
 
 
-
+/**
+* @author Ciaran Maher
+*/
 class Office: public Employee {
 
 private:

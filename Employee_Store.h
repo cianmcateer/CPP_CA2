@@ -23,6 +23,19 @@ private:
     std::string getTime();
     std::set<Employee*> getRecords();
 
+    template <class T>
+    float average(std::vector<T>& vec) {
+        if(vec.empty()) {
+            return 0;
+        } else {
+            int total = 0;
+            for(const auto& v : vec) {
+                total += v;
+            }
+            return total / vec.size();
+        }
+    }
+
 public:
     Employee_Store(std::string path);
     ~Employee_Store();
@@ -46,4 +59,10 @@ public:
 
     void displayLogs();
     void createWebpage();
+
+    void sortEmployees();
+
+    float averagePayment();
+    float averageHours();
+
 };

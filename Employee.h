@@ -6,7 +6,9 @@
 #include <sstream>
 #include <algorithm>
 
-
+/**
+* @author Ciaran Maher
+*/
 class Employee
 {
 	protected:
@@ -48,7 +50,5 @@ class Employee
 		{
 			return hours;
 		}
-
-
 
 };

@@ -24,13 +24,13 @@ std::vector<Employee*> Employee_Store::load() {
     std::vector<Employee*> backup;
 
     backup.push_back(o1);
-    backup.push_back(o2);
-    backup.push_back(o3);
-    backup.push_back(o4);
-
     backup.push_back(f1);
+    backup.push_back(o3);
     backup.push_back(f2);
-    backup.push_back(f3);
+
+    backup.push_back(o2);
+    backup.push_back(f2);
+    backup.push_back(o4);
     backup.push_back(f4);
 
     return backup;
@@ -44,6 +44,7 @@ inline std::vector<Employee*> Employee_Store::getEmployeeStore() const {
 */
 void Employee_Store::print() {
     std::cout << "Current number of employees: " << employeeStore.size() << "." << std::endl;
+
     for(Employee* e : employeeStore) {
         e->print();
     }
@@ -99,8 +100,7 @@ void Employee_Store::clear() {
 /***
 * @author Ciaran Maher
 */
-void Employee_Store::updateEmployee()
-{
+void Employee_Store::updateEmployee() {
 	bool menu = true;
 	int menuSelect;
 	std::string search;
@@ -168,7 +168,7 @@ void Employee_Store::updateEmployee()
 	  }
 	  else {
 		std::cout << std::endl;
-		std::cout << search<<" is not an employee" << std::endl;
+		std::cout << search << " is not an employee" << std::endl;
 		std::cout << std::endl;
 		break;
 	  }
@@ -339,9 +339,7 @@ std::vector<Employee*> Employee_Store::read(std::string path) {
             }
         }
     } else {
-        std::cerr << "Can't open save file" << std::endl;
-        employees = load();
-        std::cerr << "Back up file has been implemented!" << std::endl;
+        std::cerr << "Unable to open save file" << std::endl;
     }
 
     return employees;
@@ -363,6 +361,56 @@ std::stack<std::string> Employee_Store::readLog() {
         std::cerr << "Error opening log file" << std::endl;
     }
     return logs;
+}
+
+/**
+* @author Ciaran Maher
+*/
+void Employee_Store::sortEmployees() {
+	std::string search;
+	std::cout << "\nEnter any of the following to sort:\n name, age, hours, email, salary, wages \n> " ;
+	std::cin.ignore();
+	std::getline(std::cin,search);
+	std::cout << std::endl;
+
+	if(search == "name"){
+		sort(employeeStore.begin(), employeeStore.end(), [](const Employee* e1, const Employee* e2){
+				return e1->getName() < e2->getName();
+		});
+	}
+	if(search == "age"){
+		sort(employeeStore.begin(), employeeStore.end(), [](const Employee* e1, const Employee* e2){
+			return e1->getAge() < e2->getAge();
+		});
+	}
+	if(search == "hours"){
+		sort(employeeStore.begin(), employeeStore.end(), [](const Employee* e1, const Employee* e2){
+			return e1->getHours() < e2->getHours();
+		});
+	}
+	if(search == "email"){
+
+		sort(employeeStore.begin(), employeeStore.end(), [](const Employee* e1, const Employee* e2){
+			const Office* o1 = dynamic_cast<const Office*>(e1);
+			const Office* o2 = dynamic_cast<const Office*>(e2);
+			if(o1 != nullptr) {
+				return o1->getEmail() < o2->getEmail();
+			}
+		});
+	}
+	if(search == "salary"){
+
+		sort(employeeStore.begin(), employeeStore.end(), [](const Employee* e1, const Employee* e2) {
+			const Office* o1 = dynamic_cast<const Office*>(e1);
+			const Office* o2 = dynamic_cast<const Office*>(e2);
+			if(o1 != nullptr) {
+				return o1->getSalary() < o2->getSalary();
+			}
+		});
+	}
+
+	print();
+
 }
 
 /**
@@ -397,7 +445,7 @@ void Employee_Store::createWebpage() {
     html_page << "<h2>Factory Workers</h2>";
     html_page << "<tr><td class='title'>Name</td><td class='title'>Age</td><td class='title'>Hours</td><td class='title'>Wages</td></tr>";
     for(Employee* e : employeeStore) {
-		if(dynamic_cast<Factory*>(e)){
+		if(dynamic_cast<Factory*>(e)) {
 			Factory* f = dynamic_cast<Factory*>(e);
 			html_page << "<tr>";
 			html_page << "<td>" << e->getName() << "</td>"; // Converts to HTML string
@@ -428,4 +476,29 @@ void Employee_Store::displayLogs() {
         std::cout << logs.top() << std::endl;
         logs.pop(); // Pop element off to print next element
     }
+}
+
+float Employee_Store::averagePayment() {
+    std::vector<float> payments;
+
+    for(Employee* e : employeeStore) {
+        if(dynamic_cast<Factory*>(e)) {
+            Factory* f = dynamic_cast<Factory*>(e);
+            payments.push_back(f->getWage());
+        } else {
+            Office* o = dynamic_cast<Office*>(e);
+            payments.push_back(o->getSalary());
+        }
+    }
+    return average(payments);
+}
+
+float Employee_Store::averageHours() {
+    std::vector<int> hours;
+
+    for(Employee* e : employeeStore) {
+        hours.push_back(e->getHours());
+    }
+
+    return average(hours);
 }

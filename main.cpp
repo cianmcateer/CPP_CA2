@@ -10,8 +10,6 @@
 #include "Employee_Store.h"
 #include "util.h"
 
-#define DEBUG false
-
 using std::string;
 using std::cout;
 using std::cin;
@@ -22,7 +20,7 @@ void init();
 void menu(string user);
 
 int main(void) {
-    DEBUG ? menu("tester") : init();
+    init();
     return 0;
 }
 
@@ -91,39 +89,32 @@ void menu(string user) {
         display_file("menus/main_menu.txt");
         switch_validate(choice);
         switch(choice) {
-            case 0: {
+            case 0 : {
                 cout << "Goodbye!" << endl;
                 return;
                 break;
             }
-
-            case 1: {
+            case 1 : {
                 cout << "Print all employees" << endl;
                 et.print();
                 break;
             }
-
-            case 2: {
+            case 2 : {
                 cout << "Display employees sorted by one of the following properties" << endl;
                 et.sortEmployees();
                 break;
             }
-
-            case 3: {
+            case 3 : {
                 cout << "Show " << endl;
                 et.printEmployees(true);
                 break;
             }
-
-            case 4: {
+            case 4 : {
                 et.printEmployees(false);
                 break;
             }
-
-            case 5: {
-
+            case 5 : {
                 char repeat = 'Y';
-
                 while(repeat == 'Y' || repeat == 'y') {
                     cout << "Add employee" << endl;
                     cout << "please enter 1 for factory worker, 2 for office staff" << endl;
@@ -213,11 +204,10 @@ void menu(string user) {
                     cout << "Yes(Y/y), No(any key)" << endl;
                     cin >> repeat;
                 }
-
                 break;
             }
 
-            case 6: {
+            case 6 : {
                 cout << "Delete employee." << endl;
                 cout << "Please choose from one of the following employees, enter index of employee you wish to remove. Enter -1 to abort" << endl;
                 et.show_index();
@@ -243,13 +233,12 @@ void menu(string user) {
                 addLog("Employee was deleted by " + user + " on");
                 break;
             }
-
-            case 7: {
+            case 7 : {
                 cout << "Update employee" << endl;
                 et.updateEmployee();
                 break;
             }
-            case 8: {
+            case 8 : {
                 std::replace(user.begin(), user.end(), ' ', '_');
                 string filePath = "users/"+user+".txt";
                 et.save(filePath);
@@ -285,6 +274,24 @@ void menu(string user) {
                 addLog(user + " Added data to records");
                 cout << "Goodbye!, your progress has been saved" << endl;
                 return;
+                break;
+            }
+            case 13 : {
+                cout << "Average hours" << endl;
+                if(et.averageHours() == 0) {
+                    cout << "Data store is empty please add employees to continue" << endl;
+                } else {
+                    cout << "Average hours of all employees = " << et.averageHours() << endl;
+                }
+                break;
+            }
+            case 14 : {
+                cout << "Average payment" << endl;
+                if(et.averagePayment() == 0) {
+                    cout << "Data store is empty please add employees to continue" << endl;
+                } else {
+                    cout << "Average payment(office staff and factory workers) = "<< et.averagePayment() << endl;
+                }
                 break;
             }
             default:
