@@ -31,7 +31,6 @@ void init() {
 
     switch_validate(choice);
 
-    //while(true) {
         switch (choice) {
             case 0: {
                 cout << "Goodbye!" << endl;
@@ -74,7 +73,6 @@ void init() {
                 cout << "Invalid number (0 = exit, 1 = yes, 2 = no)" << endl;
                 break;
         }
-    //}
 
 }
 
@@ -85,6 +83,7 @@ void menu(string user) {
     std::replace(user.begin(), user.end(), ' ', '_');
     Employee_Store et("users/"+user+".txt");
     std::replace(user.begin(), user.end(), '_', ' ');
+
     while(true) {
         display_file("menus/main_menu.txt");
         switch_validate(choice);
@@ -291,6 +290,22 @@ void menu(string user) {
                     cout << "Data store is empty please add employees to continue" << endl;
                 } else {
                     cout << "Average payment(office staff and factory workers) = "<< et.averagePayment() << endl;
+                }
+                break;
+            }
+            case 15 : {
+                cout << "Are you sure you want to delete all your data? (Y : yes, Any other key = No)" << endl;
+
+                string wipe;
+                cin.ignore();
+                std::getline(cin, wipe);
+
+                if(wipe == "Y" || wipe == "y") {
+                    et.clear();
+                    cout << "Wipe succesful!" << endl;
+                    addLog(user + " wipes his/her data on ");
+                } else {
+                    cout << "Deletion aborted" << endl;
                 }
                 break;
             }

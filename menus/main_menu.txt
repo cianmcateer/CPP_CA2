@@ -16,4 +16,5 @@
 *   12. Save and Exit                       *
 *   13. Average hours                       *
 *   14. Average payment                     *
+*   15. Clear Records                       *
 /********************************************/
