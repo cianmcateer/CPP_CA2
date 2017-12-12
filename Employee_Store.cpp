@@ -100,80 +100,120 @@ void Employee_Store::clear() {
 /***
 * @author Ciaran Maher
 */
-void Employee_Store::updateEmployee() {
-	bool menu = true;
-	int menuSelect;
+void Employee_Store::updateEmployee(int& employee_type)
+{
+	int index;
 	std::string search;
 
-	int index;
+	if(employee_type == 1) {
+		std::cout << "Factory Employees:" << std::endl;
+		for(Employee* e : employeeStore)
+		{
+			if(dynamic_cast<Factory*>(e)) {
+				e->print();
 
-	std::string newName;
-	int newAge;
-	int newHours;
-	std::string newEmail;
-	std::string wage;
-	std::string newSalary;
+			}
+		}
+	}
+	else{
+		std::cout << "Office Employees:" << std::endl;
+			for(Employee* e : employeeStore)
+			{
+				if(dynamic_cast<Office*>(e)) {
+					e->print();
+
+			}
+		}
+
+	}
 
 	std::cout << "\nEnter employee name to begin editing"<< std::endl;
 	std::cout << "> ";
 	std::cin.ignore();
 	std::getline(std::cin,search);
 
-	for(unsigned int i = 0;i < employeeStore.size();++i) {
-      if(search == employeeStore[i]->getName())
-	  {
-	        index = i;
+	bool menu = true;
 
-		    std::cout << "\nEdit "<< employeeStore[index]->getName()<<"'s details" <<std::endl;
-			while(menu){
-    			std::cout << "+----------------------------+" << std::endl;
-    			std::cout << "|      ::Editing Menu::      |" << std::endl;
-    			std::cout << "|                            |" << std::endl;
-    			std::cout << "|-Edit name..............[1] |" << std::endl;
-    			std::cout << "|-Edit age...............[2] |" << std::endl;
-    			std::cout << "|-Edit hours.............[3] |" << std::endl;
-    			//std::cout << "|-Edit salary............[4] |" << std::endl;
-    			std::cout << "+----------------------------+" << std::endl;
-    			std::cout << "\n> ";
-    			std::cin >> menuSelect;
-    			std::cin.ignore();
+	std::string newName;
+	int newAge;
+	int newHours;
+	std::string newEmail;
+	float newWage;
+	float newSalary;
 
-    			switch(menuSelect) {
+	while(menu){
 
-                    case 0:
-                        return;
-                        break;
-    				case 1 :
-    					std::cout << "Edit name:";
-    					std::getline(std::cin,newName);
-    					employeeStore[index]->setName(newName);
-    					std::cout << employeeStore[index]->getName() << " " << employeeStore[index]->getAge() << " " << employeeStore[index]->getHours() << std::endl;
-    					break;
-    				case 2 :
-    					std::cout << "Edit Age:";
-    					std::cin >> newAge;
-    					employeeStore[index]->setAge(newAge);
-    					std::cout << employeeStore[index]->getName() << " "<< employeeStore[index]->getAge() << " "<< employeeStore[index]->getHours() << std::endl;
-    					break;
-
-    				case 3 :
-    					std::cout << "Edit Hours:";
-    					std::cin >> newHours;
-    					employeeStore[index]->setHours(newHours);
-    					std::cout <<employeeStore[index]->getName()<<" "<<employeeStore[index]->getAge() <<" "<<employeeStore[index]->getHours()<< std::endl;
-    					break;
-
-    			}
+		for(unsigned int i = 0;i < employeeStore.size();++i) {
+			if(search == employeeStore[i]->getName())
+			{
+				index = i;
+			}
 		}
-	  }
-	  else {
-		std::cout << std::endl;
-		std::cout << search << " is not an employee" << std::endl;
-		std::cout << std::endl;
-		break;
-	  }
 
-	}
+		std::cout << "\nEdit "<< employeeStore[index]->getName()<<"'s details" <<std::endl;
+		if(employee_type == 1) {
+
+			display_file("/Users/CianMcAteer/year_3/semester_1/C++/C++_CA2/menus/factory_edit.txt");
+		}
+		else{
+			display_file("/Users/CianMcAteer/year_3/semester_1/C++/C++_CA2/menus/office_edit.txt");
+		}
+
+		int menuSelect;
+		std::cin >> menuSelect;
+		std::cin.ignore();
+
+			switch(menuSelect) {
+				case 1 :
+					std::cout << "Edit name:";
+					std::getline(std::cin,newName);
+					employeeStore[index]->setName(newName);
+					std::cout <<employeeStore[index]->getName()<<" "<<employeeStore[index]->getAge() <<" "<<employeeStore[index]->getHours()<< std::endl;
+					break;
+				case 2 :
+					std::cout << "Edit Age:";
+					std::cin >> newAge;
+					employeeStore[index]->setAge(newAge);
+					std::cout <<employeeStore[index]->getName()<<" "<<employeeStore[index]->getAge() <<" "<<employeeStore[index]->getHours()<< std::endl;
+					break;
+
+				case 3 :
+					std::cout << "Edit Hours:";
+					std::cin >> newHours;
+					employeeStore[index]->setHours(newHours);
+					std::cout <<employeeStore[index]->getName()<<" "<<employeeStore[index]->getAge() <<" "<<employeeStore[index]->getHours()<< std::endl;
+					break;
+				case 4 : {
+					std::cout << "Edit Email:";
+					std::getline(std::cin,newEmail);
+					Office* off1 = dynamic_cast<Office*>(employeeStore[index]);
+					off1->setEmail(newEmail);
+					std::cout <<employeeStore[index]->getName()<<" "<<employeeStore[index]->getAge() <<" "<<employeeStore[index]->getHours()<<" "<< off1->getEmail()<<" "<< off1->getSalary()<< std::endl;
+					break;
+				}
+				case 5 : {
+					std::cout << "Edit Salary:";
+					std::cin >> newSalary;
+					Office* off2 = dynamic_cast<Office*>(employeeStore[index]);
+					off2->setSalary(newSalary);
+					std::cout <<employeeStore[index]->getName()<<" "<<employeeStore[index]->getAge() <<" "<<employeeStore[index]->getHours()<< " "<<off2->getEmail()<<" "<< off2->getSalary() << std::endl;
+					break;
+				}
+				case 6 : {
+					std::cout << "Edit Wages:";
+					std::cin >> newWage;
+					Factory* f1 = dynamic_cast<Factory*>(employeeStore[index]);
+					f1->setWage(newWage);
+					std::cout <<employeeStore[index]->getName()<<" "<<employeeStore[index]->getAge() <<" "<<employeeStore[index]->getHours()<<" "<< f1->getWage() << std::endl;
+					break;
+				}
+				case 0 :
+					menu = false;
+					break;
+			}
+
+
+	  }
 
 }
 
@@ -408,6 +448,15 @@ void Employee_Store::sortEmployees() {
 			}
 		});
 	}
+    if(search == "wages") {
+        sort(employeeStore.begin(), employeeStore.end(), [](const Employee* e1, const Employee* e2) {
+			const Factory* f1 = dynamic_cast<const Factory*>(e1);
+			const Factory* f2 = dynamic_cast<const Factory*>(e2);
+			if(f1 != nullptr) {
+				return f1->getWage() < f2->getWage();
+			}
+		});
+    }
 
 	print();
 
@@ -502,3 +551,32 @@ float Employee_Store::averageHours() {
 
     return average(hours);
 }
+/*
+std::ostream& operator<<(std::ostream& output_stream, const Employee_Store& et) {
+    output_stream << "Number of employees: " << employeeStore.size() << std::endl;
+
+    std::map<std::string,std::vector<Employee*> > map;
+
+    std::vector<Office*> office_staff;
+    std::vector<Factory*> factory_workers;
+
+    for(const Employee* e : employeeStore) {
+        if(dynamic_cast<Office*>(e)) {
+            office_staff.push_back(e);
+        } else {
+            factory_workers.push_back(e);
+        }
+    }
+
+    map["Office Staff"] = office_staff;
+    map["Factory Workers"] = factory_workers;
+
+    for(const auto& s : map) {
+        output_stream << s.first << std::endl;
+
+        for(const Employee* e : s.second) {
+            output_stream << '\t' << e->getName() << e->get
+        }
+    }
+}
+*/

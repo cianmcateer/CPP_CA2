@@ -7,10 +7,12 @@
 #include <algorithm>
 #include <stack>
 #include <set>
+#include <map>
 
 #include "Employee.h"
 #include "Office.h"
 #include "Factory.h"
+#include "util.h"
 
 class Employee_Store {
 
@@ -48,7 +50,7 @@ public:
     void show_index();
     void erase(int& index);
     void clear();
-    void updateEmployee();
+    void updateEmployee(int& employee_type);
 
     void save(std::string fileName);
 
@@ -64,5 +66,7 @@ public:
 
     float averagePayment();
     float averageHours();
+
+//    friend std::ostream& operator<<(std::ostream& output_stream, const Employee_Store& et);
 
 };

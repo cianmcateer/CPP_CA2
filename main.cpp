@@ -232,9 +232,13 @@ void menu(string user) {
                 addLog("Employee was deleted by " + user + " on");
                 break;
             }
-            case 7 : {
-                cout << "Update employee" << endl;
-                et.updateEmployee();
+            case 7: {
+
+				cout << "Update employee details" << endl;
+                cout << "please enter 1 for factory worker, 2 for office staff" << endl;
+				int employee_type;
+                switch_validate(employee_type);
+				et.updateEmployee(employee_type);
                 break;
             }
             case 8 : {
