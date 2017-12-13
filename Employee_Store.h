@@ -14,6 +14,11 @@
 #include "Factory.h"
 #include "util.h"
 
+/**
+* Class that stores all employees data
+* @author Ciaran Maher
+* @author Cian McAteer
+*/
 class Employee_Store {
 
 private:
@@ -25,6 +30,13 @@ private:
     std::string getTime();
     std::set<Employee*> getRecords();
 
+    /**
+    * Returns the mean of a templated vector
+    * used to get average of hours and payments
+    * @author Ciaran Maher
+    * @author Cian McAteer
+    * @return float
+    */
     template <class T>
     float average(std::vector<T>& vec) {
         if(vec.empty()) {

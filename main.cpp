@@ -4,7 +4,6 @@
 #include <vector>
 #include <fstream>
 #include <algorithm>
-#include <sstream>
 
 #include "Account.h"
 #include "Employee_Store.h"
@@ -67,7 +66,6 @@ void init() {
                         menu(name);
                     }
                 }
-
                 break;
             }
             default:
@@ -110,7 +108,6 @@ void menu(string user) {
                 break;
             }
             case 4 : {
-                cout << "Show " << endl;
                 et.printEmployees(true);
                 break;
             }

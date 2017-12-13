@@ -111,7 +111,6 @@ void Employee_Store::updateEmployee(int& employee_type)
 		{
 			if(dynamic_cast<Factory*>(e)) {
 				e->print();
-
 			}
 		}
 	}
@@ -121,7 +120,6 @@ void Employee_Store::updateEmployee(int& employee_type)
 			{
 				if(dynamic_cast<Office*>(e)) {
 					e->print();
-
 			}
 		}
 
@@ -141,10 +139,10 @@ void Employee_Store::updateEmployee(int& employee_type)
 	float newWage;
 	float newSalary;
 
-	while(menu){
+	while(menu) {
 
 		for(unsigned int i = 0;i < employeeStore.size();++i) {
-			if(search == employeeStore[i]->getName())
+			if(equalsIgnoreCase(search, employeeStore[i]->getName()))
 			{
 				index = i;
 			}
@@ -152,11 +150,10 @@ void Employee_Store::updateEmployee(int& employee_type)
 
 		std::cout << "\nEdit "<< employeeStore[index]->getName()<<"'s details" <<std::endl;
 		if(employee_type == 1) {
-
-			display_file("/Users/CianMcAteer/year_3/semester_1/C++/C++_CA2/menus/factory_edit.txt");
+			display_file("menus/factory_edit.txt");
 		}
-		else{
-			display_file("/Users/CianMcAteer/year_3/semester_1/C++/C++_CA2/menus/office_edit.txt");
+		else {
+			display_file("menus/office_edit.txt");
 		}
 
 		int menuSelect;
@@ -168,14 +165,14 @@ void Employee_Store::updateEmployee(int& employee_type)
 					std::cout << "Edit name:";
 					std::getline(std::cin,newName);
 					employeeStore[index]->setName(newName);
-					std::cout << employeeStore[index]->getName()<<" "<<employeeStore[index]->getAge() <<" "<<employeeStore[index]->getHours()<< std::endl;
+					std::cout << employeeStore[index]->getName() << " " << employeeStore[index]->getAge() << " " << employeeStore[index]->getHours() << std::endl;
                     addLog("Name of employee edited on");
 					break;
 				case 2 :
 					std::cout << "Edit Age:";
 					std::cin >> newAge;
 					employeeStore[index]->setAge(newAge);
-					std::cout <<employeeStore[index]->getName()<<" "<<employeeStore[index]->getAge() <<" "<<employeeStore[index]->getHours()<< std::endl;
+					std::cout << employeeStore[index]->getName()<<" "<<employeeStore[index]->getAge() << " " <<employeeStore[index]->getHours() << std::endl;
                     addLog("Age of employee edited on");
 					break;
 
@@ -217,8 +214,6 @@ void Employee_Store::updateEmployee(int& employee_type)
 					menu = false;
 					break;
 			}
-
-
 	  }
 
 }
@@ -414,7 +409,7 @@ std::stack<std::string> Employee_Store::readLog() {
 */
 void Employee_Store::sortEmployees() {
 	std::string search;
-	std::cout << "\nEnter any of the following to sort:\n name, age, hours, email, salary, wages \n> " ;
+	display_file("menus/sort_menu.txt");
 	std::cin.ignore();
 	std::getline(std::cin,search);
 	std::cout << std::endl;
@@ -434,36 +429,6 @@ void Employee_Store::sortEmployees() {
 			return e1->getHours() < e2->getHours();
 		});
 	}
-	if(search == "email"){
-
-		sort(employeeStore.begin(), employeeStore.end(), [](const Employee* e1, const Employee* e2){
-			const Office* o1 = dynamic_cast<const Office*>(e1);
-			const Office* o2 = dynamic_cast<const Office*>(e2);
-			if(o1 != nullptr) {
-				return o1->getEmail() < o2->getEmail();
-			}
-		});
-	}
-	if(search == "salary"){
-
-		sort(employeeStore.begin(), employeeStore.end(), [](const Employee* e1, const Employee* e2) {
-			const Office* o1 = dynamic_cast<const Office*>(e1);
-			const Office* o2 = dynamic_cast<const Office*>(e2);
-			if(o1 != nullptr) {
-				return o1->getSalary() < o2->getSalary();
-			}
-		});
-	}
-    if(search == "wages") {
-        sort(employeeStore.begin(), employeeStore.end(), [](const Employee* e1, const Employee* e2) {
-			const Factory* f1 = dynamic_cast<const Factory*>(e1);
-			const Factory* f2 = dynamic_cast<const Factory*>(e2);
-			if(f1 != nullptr) {
-				return f1->getWage() < f2->getWage();
-			}
-		});
-    }
-
 	print();
 
 }
@@ -558,6 +523,10 @@ float Employee_Store::averageHours() {
     return average(hours);
 }
 
+/**
+* Displays all employees by catagory by inserting them into a map
+* @author Cian McAteer
+*/
 std::ostream& operator<<(std::ostream& output_stream, const Employee_Store& et) {
 
     std::map<std::string,std::vector<Employee*> > map;
