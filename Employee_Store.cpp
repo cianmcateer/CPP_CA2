@@ -184,13 +184,24 @@ void Employee_Store::updateEmployee(int& employee_type)
                     addLog("Hours of employee edited on");
 					break;
 				case 4 : {
-					std::cout << "Edit Email:";
-					std::getline(std::cin,newEmail);
-					Office* off1 = dynamic_cast<Office*>(employeeStore[index]);
-					off1->setEmail(newEmail);
-					std::cout <<employeeStore[index]->getName()<<" "<<employeeStore[index]->getAge() <<" "<<employeeStore[index]->getHours()<<" "<< off1->getEmail()<<" "<< off1->getSalary()<< std::endl;
-                    addLog("Email of office staff edited on");
-					break;
+                    if(employee_type == 1) {
+                        std::cout << "Edit Wages:";
+    					std::cin >> newWage;
+    					Factory* f1 = dynamic_cast<Factory*>(employeeStore[index]);
+    					f1->setWage(newWage);
+    					std::cout <<employeeStore[index]->getName()<<" "<<employeeStore[index]->getAge() <<" "<<employeeStore[index]->getHours()<<" "<< f1->getWage() << std::endl;
+                        addLog("Wages edited on");
+    					
+                    } else {
+                        std::cout << "Edit Email:";
+    					std::getline(std::cin,newEmail);
+    					Office* off1 = dynamic_cast<Office*>(employeeStore[index]);
+    					off1->setEmail(newEmail);
+    					std::cout <<employeeStore[index]->getName()<<" "<<employeeStore[index]->getAge() <<" "<<employeeStore[index]->getHours()<<" "<< off1->getEmail()<<" "<< off1->getSalary()<< std::endl;
+                        addLog("Email of office staff edited on");
+
+                    }
+                    break;
 				}
 				case 5 : {
 					std::cout << "Edit Salary:";
@@ -201,15 +212,7 @@ void Employee_Store::updateEmployee(int& employee_type)
                     addLog("Salary of office staff edited on");
 					break;
 				}
-				case 6 : {
-					std::cout << "Edit Wages:";
-					std::cin >> newWage;
-					Factory* f1 = dynamic_cast<Factory*>(employeeStore[index]);
-					f1->setWage(newWage);
-					std::cout <<employeeStore[index]->getName()<<" "<<employeeStore[index]->getAge() <<" "<<employeeStore[index]->getHours()<<" "<< f1->getWage() << std::endl;
-                    addLog("Wages edited on");
-					break;
-				}
+
 				case 0 :
 					menu = false;
 					break;

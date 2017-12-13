@@ -248,10 +248,12 @@ void menu(string user) {
                 std::replace(user.begin(), user.end(), ' ', '_');
                 string filePath = "users/"+user+".txt";
                 et.save(filePath);
+                cout << "Your progress has been saved" << endl;
                 std::replace(user.begin(), user.end(), '_', ' ');
                 addLog(user + " altered his save data on ");
 
                 et.history();
+                cout << "Data has been added to permenant history" << endl;
                 addLog(user + " Added data to records");
                 break;
             }

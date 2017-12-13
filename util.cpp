@@ -53,6 +53,9 @@ std::vector<Account> get_users() {
     return accounts;
 }
 
+/**
+* @param a
+*/
 Account read_account(Account& a) {
     std::string name = a.get_name();
     std::string password = a.get_password();
@@ -156,7 +159,9 @@ void ageRestriction(int& age) {
         switch_validate(age);
     }
 }
-
+/**
+* @author Cian McAteer
+*/
 bool equalsIgnoreCase(const std::string& s1, const std::string& s2) {
     if(s1.size() != s2.size()) {
         return false;
