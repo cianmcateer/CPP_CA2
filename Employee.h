@@ -22,6 +22,7 @@ class Employee
 	public:
 		virtual ~Employee();
 		virtual void print()=0;
+		virtual std::string toString()=0;
 
 		virtual std::string save()=0;
 

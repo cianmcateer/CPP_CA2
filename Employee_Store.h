@@ -67,6 +67,6 @@ public:
     float averagePayment();
     float averageHours();
 
-//    friend std::ostream& operator<<(std::ostream& output_stream, const Employee_Store& et);
+    friend std::ostream& operator<<(std::ostream& output_stream, const Employee_Store& et);
 
 };

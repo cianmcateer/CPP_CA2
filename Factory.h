@@ -20,6 +20,7 @@ public:
     Factory();
     Factory(std::string name, int age, int hours, float wage);
 
+	std::string toString();
 	std::string save();
     ~Factory();
 

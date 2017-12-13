@@ -67,6 +67,7 @@ void init() {
                         menu(name);
                     }
                 }
+                
                 break;
             }
             default:
@@ -99,20 +100,25 @@ void menu(string user) {
                 break;
             }
             case 2 : {
+                cout << "Display by employee type" << endl;
+                cout << et << endl;
+                break;
+            }
+            case 3 : {
                 cout << "Display employees sorted by one of the following properties" << endl;
                 et.sortEmployees();
                 break;
             }
-            case 3 : {
+            case 4 : {
                 cout << "Show " << endl;
                 et.printEmployees(true);
                 break;
             }
-            case 4 : {
+            case 5 : {
                 et.printEmployees(false);
                 break;
             }
-            case 5 : {
+            case 6 : {
                 char repeat = 'Y';
                 while(repeat == 'Y' || repeat == 'y') {
                     cout << "Add employee" << endl;
@@ -206,7 +212,7 @@ void menu(string user) {
                 break;
             }
 
-            case 6 : {
+            case 7 : {
                 cout << "Delete employee." << endl;
                 cout << "Please choose from one of the following employees, enter index of employee you wish to remove. Enter -1 to abort" << endl;
                 et.show_index();
@@ -232,7 +238,7 @@ void menu(string user) {
                 addLog("Employee was deleted by " + user + " on");
                 break;
             }
-            case 7: {
+            case 8 : {
 
 				cout << "Update employee details" << endl;
                 cout << "please enter 1 for factory worker, 2 for office staff" << endl;
@@ -241,7 +247,7 @@ void menu(string user) {
 				et.updateEmployee(employee_type);
                 break;
             }
-            case 8 : {
+            case 9 : {
                 std::replace(user.begin(), user.end(), ' ', '_');
                 string filePath = "users/"+user+".txt";
                 et.save(filePath);
@@ -252,21 +258,21 @@ void menu(string user) {
                 addLog(user + " Added data to records");
                 break;
             }
-            case 9 : {
+            case 10 : {
                 et.createWebpage();
                 cout << "Your webpage has been created" << endl;
                 break;
             }
-            case 10 : {
+            case 11 : {
                 cout << "Logs display" << endl;
                 et.displayLogs();
                 break;
             }
-            case 11 : {
+            case 12 : {
                 et.show_history();
                 break;
             }
-            case 12 : {
+            case 13 : {
                 std::replace(user.begin(), user.end(), ' ', '_');
                 string filePath = "users/"+user+".txt";
                 et.save(filePath);
@@ -279,7 +285,7 @@ void menu(string user) {
                 return;
                 break;
             }
-            case 13 : {
+            case 14 : {
                 cout << "Average hours" << endl;
                 if(et.averageHours() == 0) {
                     cout << "Data store is empty please add employees to continue" << endl;
@@ -288,7 +294,7 @@ void menu(string user) {
                 }
                 break;
             }
-            case 14 : {
+            case 15 : {
                 cout << "Average payment" << endl;
                 if(et.averagePayment() == 0) {
                     cout << "Data store is empty please add employees to continue" << endl;
@@ -297,7 +303,7 @@ void menu(string user) {
                 }
                 break;
             }
-            case 15 : {
+            case 16 : {
                 cout << "Are you sure you want to delete all your data? (Y : yes, Any other key = No)" << endl;
 
                 string wipe;

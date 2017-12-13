@@ -22,3 +22,9 @@ std::string Factory::save() {
     std::replace(name.begin(), name.end(), '-', ' ');
     return ss.str();
 }
+
+std::string Factory::toString() {
+    std::stringstream ss;
+    ss << "Name: " << name << " Age: " << age << " Hours: " << hours << " Wages: " << wage << std::endl;
+    return ss.str();
+}

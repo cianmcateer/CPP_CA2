@@ -168,13 +168,15 @@ void Employee_Store::updateEmployee(int& employee_type)
 					std::cout << "Edit name:";
 					std::getline(std::cin,newName);
 					employeeStore[index]->setName(newName);
-					std::cout <<employeeStore[index]->getName()<<" "<<employeeStore[index]->getAge() <<" "<<employeeStore[index]->getHours()<< std::endl;
+					std::cout << employeeStore[index]->getName()<<" "<<employeeStore[index]->getAge() <<" "<<employeeStore[index]->getHours()<< std::endl;
+                    addLog("Name of employee edited on");
 					break;
 				case 2 :
 					std::cout << "Edit Age:";
 					std::cin >> newAge;
 					employeeStore[index]->setAge(newAge);
 					std::cout <<employeeStore[index]->getName()<<" "<<employeeStore[index]->getAge() <<" "<<employeeStore[index]->getHours()<< std::endl;
+                    addLog("Age of employee edited on");
 					break;
 
 				case 3 :
@@ -182,6 +184,7 @@ void Employee_Store::updateEmployee(int& employee_type)
 					std::cin >> newHours;
 					employeeStore[index]->setHours(newHours);
 					std::cout <<employeeStore[index]->getName()<<" "<<employeeStore[index]->getAge() <<" "<<employeeStore[index]->getHours()<< std::endl;
+                    addLog("Hours of employee edited on");
 					break;
 				case 4 : {
 					std::cout << "Edit Email:";
@@ -189,6 +192,7 @@ void Employee_Store::updateEmployee(int& employee_type)
 					Office* off1 = dynamic_cast<Office*>(employeeStore[index]);
 					off1->setEmail(newEmail);
 					std::cout <<employeeStore[index]->getName()<<" "<<employeeStore[index]->getAge() <<" "<<employeeStore[index]->getHours()<<" "<< off1->getEmail()<<" "<< off1->getSalary()<< std::endl;
+                    addLog("Email of office staff edited on");
 					break;
 				}
 				case 5 : {
@@ -197,6 +201,7 @@ void Employee_Store::updateEmployee(int& employee_type)
 					Office* off2 = dynamic_cast<Office*>(employeeStore[index]);
 					off2->setSalary(newSalary);
 					std::cout <<employeeStore[index]->getName()<<" "<<employeeStore[index]->getAge() <<" "<<employeeStore[index]->getHours()<< " "<<off2->getEmail()<<" "<< off2->getSalary() << std::endl;
+                    addLog("Salary of office staff edited on");
 					break;
 				}
 				case 6 : {
@@ -205,6 +210,7 @@ void Employee_Store::updateEmployee(int& employee_type)
 					Factory* f1 = dynamic_cast<Factory*>(employeeStore[index]);
 					f1->setWage(newWage);
 					std::cout <<employeeStore[index]->getName()<<" "<<employeeStore[index]->getAge() <<" "<<employeeStore[index]->getHours()<<" "<< f1->getWage() << std::endl;
+                    addLog("Wages edited on");
 					break;
 				}
 				case 0 :
@@ -551,16 +557,15 @@ float Employee_Store::averageHours() {
 
     return average(hours);
 }
-/*
+
 std::ostream& operator<<(std::ostream& output_stream, const Employee_Store& et) {
-    output_stream << "Number of employees: " << employeeStore.size() << std::endl;
 
     std::map<std::string,std::vector<Employee*> > map;
 
-    std::vector<Office*> office_staff;
-    std::vector<Factory*> factory_workers;
+    std::vector<Employee*> office_staff;
+    std::vector<Employee*> factory_workers;
 
-    for(const Employee* e : employeeStore) {
+    for(Employee* e : et.employeeStore) {
         if(dynamic_cast<Office*>(e)) {
             office_staff.push_back(e);
         } else {
@@ -568,15 +573,17 @@ std::ostream& operator<<(std::ostream& output_stream, const Employee_Store& et) 
         }
     }
 
-    map["Office Staff"] = office_staff;
-    map["Factory Workers"] = factory_workers;
+    map.insert(std::pair<std::string, std::vector<Employee*> >("Office", office_staff));
+    map.insert(std::pair<std::string, std::vector<Employee*> >("Factory", factory_workers));
+
 
     for(const auto& s : map) {
-        output_stream << s.first << std::endl;
+        output_stream << " Number of " << s.first << " employees: " << s.second.size() << std::endl;
 
-        for(const Employee* e : s.second) {
-            output_stream << '\t' << e->getName() << e->get
+        for(Employee* e : s.second) {
+            output_stream << '\t' << e->toString() << std::endl;
         }
     }
+
+    return output_stream;
 }
-*/

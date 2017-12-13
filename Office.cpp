@@ -22,3 +22,9 @@ std::string Office::save() {
 
     return ss.str();
 }
+
+std::string Office::toString() {
+    std::stringstream ss;
+    ss << "Name: " << name << " Age: " << age << " Hours: " << hours << " Email: " << email << " Salary: " << salary << std::endl;
+    return ss.str();
+}

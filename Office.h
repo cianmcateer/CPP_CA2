@@ -25,6 +25,8 @@ public:
     Office(std::string name, int age, int hours, std::string email, float salary);
     ~Office();
 
+    std::string toString();
+
 
     void extract_data(std::ostream& out);
 

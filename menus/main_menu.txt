@@ -3,18 +3,19 @@
 *   Please choose from one of the following *
 *   0. Exit (No save)                       *
 *   1. Show All employees                   *
-*   2. Show employees (custom sort)         *
-*   3. Show factory workers                 *
-*   4. Show office staff                    *
-*   5. Add employee                         *
-*   6. Delete employee                      *
-*   7. Update employee                      *
-*   8. Save changes                         *
-*   9. HTML page                            *
-*   10. View Logs                           *
-*   11. View history                        *
-*   12. Save and Exit                       *
-*   13. Average hours                       *
-*   14. Average payment                     *
-*   15. Clear Records                       *
+*   2. Show all employees by type           *
+*   3. Show employees (custom sort)         *
+*   4. Show factory workers                 *
+*   5. Show office staff                    *
+*   6. Add employee                         *
+*   7. Delete employee                      *
+*   8. Update employee                      *
+*   9. Save changes                         *
+*   10. HTML page                           *
+*   11. View Logs                           *
+*   12. View history                        *
+*   13. Save and Exit                       *
+*   14. Average hours                       *
+*   15. Average payment                     *
+*   16. Clear Records                       *
 /********************************************/
