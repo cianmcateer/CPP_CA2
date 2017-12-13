@@ -62,12 +62,12 @@ void init() {
                 std::getline(cin, name);
                 vector<Account> users = get_users();
 
-                for(auto& u : users) {
-                    if(u.get_name() == name) {
+                for(const auto& u : users) {
+                    if(equalsIgnoreCase(u.get_name(), name)) {
                         menu(name);
                     }
                 }
-                
+
                 break;
             }
             default:
